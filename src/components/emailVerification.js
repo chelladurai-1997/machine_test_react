@@ -2,22 +2,18 @@ import React, { useState, useEffect } from 'react'
 import OtpInput from 'react-otp-input'
 
 import { connect } from 'react-redux'
-import NavBar from './navbar';
+import NavBar from './navbar'
 
 function EmailVerification (props) {
-  const [msg,setMsg]=useState('Verify')
+  const [msg, setMsg] = useState('Verify')
   const [otp, setOTP] = useState('')
   const handleChange = otp => setOTP(otp)
   console.log('hhdhdhddh', otp)
-  const WrongCodeMessegae=()=>{
+  const WrongCodeMessegae = () => {
     setMsg('Sorry😐 You are Wrong !')
     setTimeout(() => {
       setMsg('Verify')
     }, 4000)
-    
-
-
-
   }
   useEffect(() => {
     // eslint-disable-next-line
@@ -25,15 +21,14 @@ function EmailVerification (props) {
       localStorage.setItem('form_data', JSON.stringify(props.registerFormData))
 
       props.history.push('/LandingPage')
-
     }
     // eslint-disable-next-line
   }, [otp])
   return (
     <React.Fragment>
-        <NavBar page={3} />
+      <NavBar page={3} />
 
- <div className='content-holder'>
+      <div className='content-holder'>
         <img
           style={{ visibility: 'hidden' }}
           src='Amazon Logo.png'
@@ -96,7 +91,7 @@ function EmailVerification (props) {
 
               <div className='col-9'>
                 <button
-                disabled={msg=='Verify'?false:true}
+                  disabled={msg === 'Verify' ? false : true}
                   id='amazon'
                   style={{ width: 272 }}
                   onClick={() => {
@@ -114,7 +109,7 @@ function EmailVerification (props) {
 
                       // alert('yes verified')
                     } else {
-                     WrongCodeMessegae()
+                      WrongCodeMessegae()
                     }
                   }}
                 >

@@ -4,12 +4,15 @@ import { connect } from 'react-redux'
 import store from '../store'
 import {
   checkUndefinedNull,
-  updateFields
+  updateFields,updateStates
 } from '../store/actions/registerActionCreator'
-// import getAllTasks from '../store/actions/registerActionCreator'
+import csc from 'country-state-city'
 import NavBar from './navbar';
 
 function RegisterPersonal (props) {
+
+  const [CountryList]= useState(csc.getAllCountries())
+
   const [NameErr, setNameErr] = useState(false)
   const [GenderErr, setGenderErr] = useState(false)
   const [StateErr, setStateErr] = useState(false)
@@ -134,6 +137,8 @@ function RegisterPersonal (props) {
             {/* <input type="email" name="email" defaultValue style={{paddingLeft:3,height:28,borderStyle:'solid',borderWidth:1,borderColor:'#CECECE',marginTop:3}} value='Chelladurai' /> */}
             <select
               onChange={e => {
+                //  setCountryStates(csc.getStatesOfCountry(e.target.value)) 
+                 updateStates(csc.getStatesOfCountry(e.target.value))
                 updateFields({
                   ...props.registerFormData,
                   country: e.target.value
@@ -154,10 +159,8 @@ function RegisterPersonal (props) {
             >
               <option value=''>Choose</option>
 
-              <option value='India'>India</option>
-              <option value='United states'>United states</option>
-              <option value='Germany'>Germany</option>
-              <option value='Canada'>Canada</option>
+              {CountryList&&CountryList.map((item)=><option value={item.id}>{item.name}</option>)}
+      
             </select>
             {CountryErr && (
               <span style={{ color: 'red', fontSize: 14 }}>*Required</span>
@@ -190,10 +193,8 @@ function RegisterPersonal (props) {
             >
               <option value=''>Choose</option>
 
-              <option value='Tamil Nadu'>Tamil Nadu</option>
-              <option value='Karnataka'>Karnataka</option>
-              <option value='Kerala'>Kerala</option>
-              <option value='Andhra pradesh'>Andhra pradesh</option>
+              
+            {props.countryStates && props.countryStates.map((state)=><option value={state.name}>{state.name}</option>)}
             </select>
             {StateErr && (
               <span style={{ color: 'red', fontSize: 14 }}>*Required</span>
@@ -272,7 +273,8 @@ function RegisterPersonal (props) {
 const MapStateToProps = state => {
   return {
     registerFormData: state.registerFormData,
-    validationResult: state.validationResult
+    validationResult: state.validationResult,
+    countryStates:state.countryStates
   }
 }
 

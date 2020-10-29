@@ -1,10 +1,11 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
-import { registerFormData, validateFormData } from './reducers/formReducer'
+import { registerFormData, validateFormData, stateList } from './reducers/formReducer'
 import thunk from 'redux-thunk'
 const middleware = [thunk]
 const allReducers = combineReducers({
   registerFormData: registerFormData,
-  validationResult: validateFormData
+  validationResult: validateFormData,
+  countryStates:stateList
 })
 const initialState = {
   registerFormData: {
@@ -25,7 +26,8 @@ const initialState = {
   validationResult: {
     isPersonelInfoForm: {isTriggered:false, status: false, Message: [] },
     isCompanyInfoForm: { status: false, Message: [] }
-  }
+  },
+  countryStates:[]
 }
 const store = createStore(
   allReducers,

@@ -11,3 +11,9 @@ export const checkUndefinedNull = value => {
     return false
   }
 }
+
+export const updateStates=(data)=>{
+  console.log('sdjjkjsjhdjksdhjskfh',data)
+  store.dispatch({ type: 'UPDATED_STATES', payload: data })
+
+}

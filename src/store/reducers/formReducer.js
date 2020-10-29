@@ -27,18 +27,31 @@ export const registerFormData = (state = initialState, { type, payload }) => {
 
 export const validateFormData = (
   state = {
-    isPersonelInfoForm: { isTriggered: false,status: false, Message: '' },
+    isPersonelInfoForm: { isTriggered: false, status: false, Message: '' },
     isCompanyInfoForm: { status: false, Message: '' }
   },
   { type, payload }
 ) => {
   switch (type) {
     case 'VALIDATED_PERSONEL_FORM':
-      return { ...state,isPersonelInfoForm:payload }
+      return { ...state, isPersonelInfoForm: payload }
     case 'VALIDATED_COMPANY_FORM':
-        return { ...state,isCompanyInfoForm:payload }
-        case 'TRIGGER_FALSE':
-          return { ...state,isCompanyInfoForm:{...state.isCompanyInfoForm,isTriggered:false} }
+      return { ...state, isCompanyInfoForm: payload }
+    case 'TRIGGER_FALSE':
+      return {
+        ...state,
+        isCompanyInfoForm: { ...state.isCompanyInfoForm, isTriggered: false }
+      }
+
+    default:
+      return state
+  }
+}
+
+export const stateList = (state = [], { type, payload }) => {
+  switch (type) {
+    case 'UPDATED_STATES':
+      return [...payload]
 
     default:
       return state

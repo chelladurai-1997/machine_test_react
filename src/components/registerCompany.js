@@ -7,7 +7,7 @@ import {
   updateFields
 } from '../store/actions/registerActionCreator'
 // import getAllTasks from '../store/actions/registerActionCreator'
-import NavBar from './navbar';
+import NavBar from './navbar'
 
 function RegisterCompany (props) {
   const [isLoading, setLoading] = useState(false)
@@ -19,9 +19,9 @@ function RegisterCompany (props) {
 
   return (
     <React.Fragment>
-              <NavBar page={2} />
+      <NavBar page={2} />
 
- <div className='content-holder'>
+      <div className='content-holder'>
         <img
           style={{ visibility: 'hidden' }}
           src='Amazon Logo.png'
@@ -40,24 +40,52 @@ function RegisterCompany (props) {
               <input
                 id='file-Input'
                 onChange={e => {
+                  // Creating Ref URL
+                  e.preventDefault()
+                  const { files } = e.target
+                  const localImageUrl = window.URL.createObjectURL(files[0])
+
+                  /* Convert to file from  
+
+var file = new File([localImageUrl], "name");
+
+ 
+*/
+
                   console.log('hgjhsgjaghd', e.target.files)
                   updateFields({
                     ...props.registerFormData,
-                    company_logo: e.target.files[0]
+                    company_logo: localImageUrl
                   })
                 }}
                 accept='image/x-png,image/gif,image/jpeg'
                 style={{ display: 'none' }}
                 type='file'
               ></input>{' '}
-              <span
-                class='Upload '
-                onClick={() => {
-                  document.getElementById('file-Input').click()
-                }}
-              >
-                <i className='fa fa-file-image-o' aria-hidden='true'></i>
-              </span>
+              {props.registerFormData.company_logo === undefined ||
+              props.registerFormData.company_logo === '' ? (
+                <span
+                  class='Upload '
+                  onClick={() => {
+                    document.getElementById('file-Input').click()
+                  }}
+                >
+                  <i className='fa fa-file-image-o' aria-hidden='true'></i>
+                </span>
+              ) : (
+                <img
+                  onClick={() => {
+                    document.getElementById('file-Input').click()
+                  }}
+                  style={{
+                    height: '115%',
+                    width: '300%',
+                    objectFit: 'contain'
+                  }}
+                  src={props.registerFormData.company_logo}
+                  alt='Choose new'
+                ></img>
+              )}
             </div>
             <div className='col-9' style={{ paddingTop: 25, paddingLeft: 30 }}>
               <span
@@ -240,7 +268,7 @@ function RegisterCompany (props) {
                       checkUndefinedNull(data.job_title) &&
                       checkUndefinedNull(data.year_of_experience)
                     ) {
-                      var OTP = Math.floor(100000 + Math.random() * 900000);
+                      var OTP = Math.floor(100000 + Math.random() * 900000)
                       setLoading(true)
                       window.Email.send({
                         Host: 'smtp.gmail.com',
@@ -267,10 +295,7 @@ function RegisterCompany (props) {
                     }
                   }}
                 >
-                  
-
-                  {isLoading?'Loading...':'Send OTP'}    
-
+                  {isLoading ? 'Sending OTP...' : 'Send OTP'}
                 </button>
               </div>
             </div>
