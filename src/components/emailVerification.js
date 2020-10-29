@@ -5,9 +5,20 @@ import { connect } from 'react-redux'
 import NavBar from './navbar';
 
 function EmailVerification (props) {
+  const [msg,setMsg]=useState('Verify')
   const [otp, setOTP] = useState('')
   const handleChange = otp => setOTP(otp)
   console.log('hhdhdhddh', otp)
+  const WrongCodeMessegae=()=>{
+    setMsg('Sorry😐 You are Wrong !')
+    setTimeout(() => {
+      setMsg('Verify')
+    }, 4000)
+    
+
+
+
+  }
   useEffect(() => {
     // eslint-disable-next-line
     if (props.registerFormData.generated_otp == otp) {
@@ -85,6 +96,7 @@ function EmailVerification (props) {
 
               <div className='col-9'>
                 <button
+                disabled={msg=='Verify'?false:true}
                   id='amazon'
                   style={{ width: 272 }}
                   onClick={() => {
@@ -102,13 +114,11 @@ function EmailVerification (props) {
 
                       // alert('yes verified')
                     } else {
-                      alert(
-                        'Sorry...It seems you have not entered correct verification code'
-                      )
+                     WrongCodeMessegae()
                     }
                   }}
                 >
-                  Verify
+                  {msg}
                 </button>
               </div>
             </div>
